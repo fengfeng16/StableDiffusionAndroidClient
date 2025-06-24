@@ -1,0 +1,443 @@
+{
+    "sd-models": [
+        {
+            "title": "animagineXLV31_v31.safetensors [e3c47aedb0]",
+            "model_name": "animagineXLV31_v31",
+            "hash": "e3c47aedb0",
+            "sha256": "e3c47aedb06418c6c331443cd89f2b3b3b34b7ed2102a3d4c4408a8d35aad6b0",
+            "filename": "D:\\AI\\stable-diffusion-webui\\models\\Stable-diffusion\\animagineXLV31_v31.safetensors",
+            "config": null
+        },
+        {
+            "title": "Anything-V3.0.ckpt [8712e20a5d]",
+            "model_name": "Anything-V3.0",
+            "hash": "8712e20a5d",
+            "sha256": "8712e20a5d65b6acaa743e8a74961eadfdf846a2c9a32160d80a80cba13ad475",
+            "filename": "D:\\AI\\stable-diffusion-webui\\models\\Stable-diffusion\\Anything-V3.0.ckpt",
+            "config": null
+        },
+        {
+            "title": "AnythingV5_v5PrtRE.safetensors",
+            "model_name": "AnythingV5_v5PrtRE",
+            "hash": null,
+            "sha256": null,
+            "filename": "D:\\AI\\stable-diffusion-webui\\models\\Stable-diffusion\\AnythingV5_v5PrtRE.safetensors",
+            "config": null
+        },
+        {
+            "title": "AnythingXL_xl.safetensors [8421598e93]",
+            "model_name": "AnythingXL_xl",
+            "hash": "8421598e93",
+            "sha256": "8421598e930be75d6e7afc80db0ef38cf324901966bd0fb8739e69c448e18a89",
+            "filename": "D:\\AI\\stable-diffusion-webui\\models\\Stable-diffusion\\AnythingXL_xl.safetensors",
+            "config": null
+        },
+        {
+            "title": "autismmixSDXL_autismmixPony.safetensors [821aa5537f]",
+            "model_name": "autismmixSDXL_autismmixPony",
+            "hash": "821aa5537f",
+            "sha256": "821aa5537f8ddafdbf963827551865c31c5bbfab1abe7925cb5f006c8f71e485",
+            "filename": "D:\\AI\\stable-diffusion-webui\\models\\Stable-diffusion\\autismmixSDXL_autismmixPony.safetensors",
+            "config": null
+        },
+        {
+            "title": "noobaiXLNAIXL_epsilonPred10Version.safetensors [ff827fc345]",
+            "model_name": "noobaiXLNAIXL_epsilonPred10Version",
+            "hash": "ff827fc345",
+            "sha256": "ff827fc34584853257d6de64b8bc3e34156814f6b0cfd1a5112a5e9164806df1",
+            "filename": "D:\\AI\\stable-diffusion-webui\\models\\Stable-diffusion\\noobaiXLNAIXL_epsilonPred10Version.safetensors",
+            "config": null
+        },
+        {
+            "title": "noobaiXLNAIXL_vPred10Version.safetensors [ea349eeae8]",
+            "model_name": "noobaiXLNAIXL_vPred10Version",
+            "hash": "ea349eeae8",
+            "sha256": "ea349eeae87ca8d25ba902c93810f7ca83e5c82f920edf12f273af004ae02819",
+            "filename": "D:\\AI\\stable-diffusion-webui\\models\\Stable-diffusion\\noobaiXLNAIXL_vPred10Version.safetensors",
+            "config": null
+        },
+        {
+            "title": "NovelAI-Final-Pruned.ckpt [89d59c3dde]",
+            "model_name": "NovelAI-Final-Pruned",
+            "hash": "89d59c3dde",
+            "sha256": "89d59c3dde4c56c6d5c41da34cc55ce479d93b4007046980934b14db71bdb2a8",
+            "filename": "D:\\AI\\stable-diffusion-webui\\models\\Stable-diffusion\\NovelAI-Final-Pruned.ckpt",
+            "config": null
+        },
+        {
+            "title": "NovelAI-Full-Veision.ckpt",
+            "model_name": "NovelAI-Full-Veision",
+            "hash": null,
+            "sha256": null,
+            "filename": "D:\\AI\\stable-diffusion-webui\\models\\Stable-diffusion\\NovelAI-Full-Veision.ckpt",
+            "config": null
+        },
+        {
+            "title": "ponyDiffusionV6XL_v6StartWithThisOne.safetensors [67ab2fd8ec]",
+            "model_name": "ponyDiffusionV6XL_v6StartWithThisOne",
+            "hash": "67ab2fd8ec",
+            "sha256": "67ab2fd8ec439a89b3fedb15cc65f54336af163c7eb5e4f2acc98f090a29b0b3",
+            "filename": "D:\\AI\\stable-diffusion-webui\\models\\Stable-diffusion\\ponyDiffusionV6XL_v6StartWithThisOne.safetensors",
+            "config": null
+        },
+        {
+            "title": "sd_xl_base_1.0.safetensors [31e35c80fc]",
+            "model_name": "sd_xl_base_1.0",
+            "hash": "31e35c80fc",
+            "sha256": "31e35c80fc4829d14f90153f4c74cd59c90b779f6afe05a74cd6120b893f7e5b",
+            "filename": "D:\\AI\\stable-diffusion-webui\\models\\Stable-diffusion\\sd_xl_base_1.0.safetensors",
+            "config": null
+        },
+        {
+            "title": "stableDiffusion3SD3_sd3MediumInclT5XXL.safetensors [92db4295e9]",
+            "model_name": "stableDiffusion3SD3_sd3MediumInclT5XXL",
+            "hash": "92db4295e9",
+            "sha256": "92db4295e9c9ab8401ef60566d975656a35b0bd0f6d9ce0d083725171f7b3174",
+            "filename": "D:\\AI\\stable-diffusion-webui\\models\\Stable-diffusion\\stableDiffusion3SD3_sd3MediumInclT5XXL.safetensors",
+            "config": null
+        },
+        {
+            "title": "tPonynai3_v7.safetensors [a8f6faa795]",
+            "model_name": "tPonynai3_v7",
+            "hash": "a8f6faa795",
+            "sha256": "a8f6faa7954285b36ccc339f38019d76089168465bbc6f56ef2c5b17a8e05d51",
+            "filename": "D:\\AI\\stable-diffusion-webui\\models\\Stable-diffusion\\tPonynai3_v7.safetensors",
+            "config": null
+        },
+        {
+            "title": "waiANINSFWPONYXL_v130.safetensors [bfa96353b7]",
+            "model_name": "waiANINSFWPONYXL_v130",
+            "hash": "bfa96353b7",
+            "sha256": "bfa96353b76fcc1971dba1fa98e4d9dbad9965220104e3913a61b4eda8143e3f",
+            "filename": "D:\\AI\\stable-diffusion-webui\\models\\Stable-diffusion\\waiANINSFWPONYXL_v130.safetensors",
+            "config": null
+        },
+        {
+            "title": "waiNSFWIllustrious_v130.safetensors",
+            "model_name": "waiNSFWIllustrious_v130",
+            "hash": null,
+            "sha256": null,
+            "filename": "D:\\AI\\stable-diffusion-webui\\models\\Stable-diffusion\\waiNSFWIllustrious_v130.safetensors",
+            "config": null
+        }
+    ],
+    "samplers": [
+        {
+            "name": "DPM++ 2M",
+            "aliases": [
+                "k_dpmpp_2m"
+            ],
+            "options": {
+                "scheduler": "karras"
+            }
+        },
+        {
+            "name": "DPM++ SDE",
+            "aliases": [
+                "k_dpmpp_sde"
+            ],
+            "options": {
+                "scheduler": "karras",
+                "second_order": "True",
+                "brownian_noise": "True"
+            }
+        },
+        {
+            "name": "DPM++ 2M SDE",
+            "aliases": [
+                "k_dpmpp_2m_sde"
+            ],
+            "options": {
+                "scheduler": "exponential",
+                "brownian_noise": "True"
+            }
+        },
+        {
+            "name": "DPM++ 2M SDE Heun",
+            "aliases": [
+                "k_dpmpp_2m_sde_heun"
+            ],
+            "options": {
+                "scheduler": "exponential",
+                "brownian_noise": "True",
+                "solver_type": "heun"
+            }
+        },
+        {
+            "name": "DPM++ 2S a",
+            "aliases": [
+                "k_dpmpp_2s_a"
+            ],
+            "options": {
+                "scheduler": "karras",
+                "uses_ensd": "True",
+                "second_order": "True"
+            }
+        },
+        {
+            "name": "DPM++ 3M SDE",
+            "aliases": [
+                "k_dpmpp_3m_sde"
+            ],
+            "options": {
+                "scheduler": "exponential",
+                "discard_next_to_last_sigma": "True",
+                "brownian_noise": "True"
+            }
+        },
+        {
+            "name": "Euler a",
+            "aliases": [
+                "k_euler_a",
+                "k_euler_ancestral"
+            ],
+            "options": {
+                "uses_ensd": "True"
+            }
+        },
+        {
+            "name": "Euler",
+            "aliases": [
+                "k_euler"
+            ],
+            "options": {}
+        },
+        {
+            "name": "LMS",
+            "aliases": [
+                "k_lms"
+            ],
+            "options": {}
+        },
+        {
+            "name": "Heun",
+            "aliases": [
+                "k_heun"
+            ],
+            "options": {
+                "second_order": "True"
+            }
+        },
+        {
+            "name": "DPM2",
+            "aliases": [
+                "k_dpm_2"
+            ],
+            "options": {
+                "scheduler": "karras",
+                "discard_next_to_last_sigma": "True",
+                "second_order": "True"
+            }
+        },
+        {
+            "name": "DPM2 a",
+            "aliases": [
+                "k_dpm_2_a"
+            ],
+            "options": {
+                "scheduler": "karras",
+                "discard_next_to_last_sigma": "True",
+                "uses_ensd": "True",
+                "second_order": "True"
+            }
+        },
+        {
+            "name": "DPM fast",
+            "aliases": [
+                "k_dpm_fast"
+            ],
+            "options": {
+                "uses_ensd": "True"
+            }
+        },
+        {
+            "name": "DPM adaptive",
+            "aliases": [
+                "k_dpm_ad"
+            ],
+            "options": {
+                "uses_ensd": "True"
+            }
+        },
+        {
+            "name": "Restart",
+            "aliases": [
+                "restart"
+            ],
+            "options": {
+                "scheduler": "karras",
+                "second_order": "True"
+            }
+        },
+        {
+            "name": "DDIM",
+            "aliases": [
+                "ddim"
+            ],
+            "options": {}
+        },
+        {
+            "name": "DDIM CFG++",
+            "aliases": [
+                "ddim_cfgpp"
+            ],
+            "options": {}
+        },
+        {
+            "name": "PLMS",
+            "aliases": [
+                "plms"
+            ],
+            "options": {}
+        },
+        {
+            "name": "UniPC",
+            "aliases": [
+                "unipc"
+            ],
+            "options": {}
+        },
+        {
+            "name": "LCM",
+            "aliases": [
+                "k_lcm"
+            ],
+            "options": {}
+        }
+    ],
+    "schedulers": [
+        {
+            "name": "automatic",
+            "label": "Automatic",
+            "aliases": null,
+            "default_rho": -1.0,
+            "need_inner_model": false
+        },
+        {
+            "name": "uniform",
+            "label": "Uniform",
+            "aliases": null,
+            "default_rho": -1.0,
+            "need_inner_model": true
+        },
+        {
+            "name": "karras",
+            "label": "Karras",
+            "aliases": null,
+            "default_rho": 7.0,
+            "need_inner_model": false
+        },
+        {
+            "name": "exponential",
+            "label": "Exponential",
+            "aliases": null,
+            "default_rho": -1.0,
+            "need_inner_model": false
+        },
+        {
+            "name": "polyexponential",
+            "label": "Polyexponential",
+            "aliases": null,
+            "default_rho": 1.0,
+            "need_inner_model": false
+        },
+        {
+            "name": "sgm_uniform",
+            "label": "SGM Uniform",
+            "aliases": [
+                "SGMUniform"
+            ],
+            "default_rho": -1.0,
+            "need_inner_model": true
+        },
+        {
+            "name": "kl_optimal",
+            "label": "KL Optimal",
+            "aliases": null,
+            "default_rho": -1.0,
+            "need_inner_model": false
+        },
+        {
+            "name": "align_your_steps",
+            "label": "Align Your Steps",
+            "aliases": null,
+            "default_rho": -1.0,
+            "need_inner_model": false
+        },
+        {
+            "name": "simple",
+            "label": "Simple",
+            "aliases": null,
+            "default_rho": -1.0,
+            "need_inner_model": true
+        },
+        {
+            "name": "normal",
+            "label": "Normal",
+            "aliases": null,
+            "default_rho": -1.0,
+            "need_inner_model": true
+        },
+        {
+            "name": "ddim",
+            "label": "DDIM",
+            "aliases": null,
+            "default_rho": -1.0,
+            "need_inner_model": true
+        },
+        {
+            "name": "beta",
+            "label": "Beta",
+            "aliases": null,
+            "default_rho": -1.0,
+            "need_inner_model": true
+        }
+    ],
+    "prompt-styles": [
+        {
+            "name": "pony",
+            "prompt": "score_9, score_8_up, score_7_up, derpibooru_p_95, source_anime, very aesthetic, anime screencap, anime coloring, BREAK {prompt}",
+            "negative_prompt": "score_6, score_5, score_4, derpibooru_p_low, lowres, bad anatomy, bad hands, text, cropped, worst quality, low quality, jpeg artifacts, signature, watermark, username, blurry, artist name, mosaic censoring, twitter username, logo, limited palette, monochrome, Blurred poorly drawn eyes, out of frame, bad quality eyes, asymmetric eyes, long neck, elongated neck, blurred eyes, undetailed eyes, ugly face, blurred, grainy, cut off, oversharpened, sign, amateur, extra limbs, dull colours, boring, lacklustre, bad art, text, abominations, more than 2 legs, more than 2 hand, fused hands, bad proportions, colorless, glitch, bad face, distorted face, messed up eyes, deformed, extra limb, extra finger, bad hands, broken finger, black and white,bad_feet, {prompt}"
+        },
+        {
+            "name": "nai",
+            "prompt": "artist:gomzi,artist:torino,artist:rella, masterpiece,best quality,year 2024,newest,highres,absurdres,best quality,amazing quality,very aesthetic,absurdres, {prompt}",
+            "negative_prompt": "lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, bad feet, {prompt}"
+        }
+    ],
+    "sd-vae": [
+        {
+            "model_name": "Anything 4.0.vae.pt",
+            "filename": "D:\\AI\\stable-diffusion-webui\\models\\VAE\\Anything 4.0.vae.pt"
+        },
+        {
+            "model_name": "Anything-V3.0.vae.pt",
+            "filename": "D:\\AI\\stable-diffusion-webui\\models\\VAE\\Anything-V3.0.vae.pt"
+        },
+        {
+            "model_name": "sdxlVAE_sdxlVAE.safetensors",
+            "filename": "D:\\AI\\stable-diffusion-webui\\models\\VAE\\sdxlVAE_sdxlVAE.safetensors"
+        },
+        {
+            "model_name": "sdxl_vae.safetensors",
+            "filename": "D:\\AI\\stable-diffusion-webui\\models\\VAE\\sdxl_vae.safetensors"
+        }
+    ],
+    "loras": [
+        {
+            "name": "古典I_V0",
+            "alias": "lora",
+            "path": "D:\\AI\\stable-diffusion-webui\\models\\Lora\\style\\古典I_V0.safetensors"
+        },
+        {
+            "name": "简彩_V0",
+            "alias": "lora",
+            "path": "D:\\AI\\stable-diffusion-webui\\models\\Lora\\style\\简彩_V0.safetensors"
+        },
+        {
+            "name": "融彩_V0",
+            "alias": "lora",
+            "path": "D:\\AI\\stable-diffusion-webui\\models\\Lora\\style\\融彩_V0.safetensors"
+        }
+    ]
+}
