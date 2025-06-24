@@ -109,7 +109,7 @@ class GenerateService : Service() {
         super.onDestroy()
     }
 
-    fun startPolling(url: String, onResult: (progress: Float, image: GeneratedImage?) -> Unit) {
+    fun startPolling(url: String, onResult: (progress: Float, image: GeneratedImage?, job: String?, jobCount: Int?) -> Unit) {
         pollingJob?.cancel()
 
         pollingJob = serviceScope.launch {
@@ -120,6 +120,9 @@ class GenerateService : Service() {
                     val json = JSONObject(result)
                     val progress = json.optDouble("progress", 0.0).toFloat()
                     val imageBase64 = json.optString("current_image", null.toString())
+                    val state = json.optJSONObject("state")
+                    val job = state?.optString("job", "")
+                    val jobCount = state?.optInt("job_count", 0)
 
                     var image: GeneratedImage? = null
 
@@ -133,7 +136,7 @@ class GenerateService : Service() {
                     }
 
                     withContext(Dispatchers.Main) {
-                        onResult(progress, image)
+                        onResult(progress, image, job, jobCount)
                         updateNotification("进度：${(progress * 100).toInt()}%")
                     }
                 } catch (e: Exception) {

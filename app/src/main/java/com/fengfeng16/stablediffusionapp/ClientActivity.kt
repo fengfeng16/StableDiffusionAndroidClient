@@ -209,7 +209,7 @@ class ClientActivity : ComponentActivity() {
                     ?: { _: String, _: String, _: (List<GeneratedImage>) -> Unit -> }
 
                 val startPolling = service?.let { it::startPolling }
-                    ?: { _: String, _: (Float, GeneratedImage?) -> Unit -> }
+                    ?: { _: String, _: (Float, GeneratedImage?, String?, Int?) -> Unit -> }
 
                 val endPolling = service?.let { it::endPolling }
                     ?: { }
@@ -314,7 +314,7 @@ fun ClientScreen(
         (url: String, body: String, onDone: (List<GeneratedImage>) -> Unit) -> Unit
     )? = null,
     startPolling: (
-        (url: String, onResult: (Float, GeneratedImage?) -> Unit) -> Unit
+        (url: String, onResult: (Float, GeneratedImage?, String?, Int?) -> Unit) -> Unit
     )? = null,
     endPolling: (
         () -> Unit
@@ -330,6 +330,7 @@ fun ClientScreen(
     }
 
     val imageList = remember { mutableStateListOf<GeneratedImage>() }
+    val loadingImageList = remember { mutableStateListOf<GeneratedImage>() }
 
     var isLoading by remember {
         mutableStateOf(false)
@@ -439,7 +440,7 @@ fun ClientScreen(
 
         if (genImg != null) {
             genImg(url, json, {
-                imageList.removeAt(imageList.lastIndex)
+                loadingImageList.clear()
                 imageList.addAll(it)
                 selectedImg = imageList.lastIndex
                 isLoading = false;
@@ -449,31 +450,60 @@ fun ClientScreen(
             })
             progress = 0f;
             isLoading = true
+
+            var loadingImageIndex = 1
             if (startPolling != null) {
-                startPolling(url, fun(prog: Float, image: GeneratedImage?) {
+                startPolling(url, fun(prog: Float, image: GeneratedImage?, job: String?, jobCount: Int?) {
                     progress = prog
                     if (image != null) {
-                        imageList.removeAt(imageList.lastIndex)
-                        imageList.add(image)
+                        if(job != null && jobCount != null && jobCount > 1){
+                            val regex = Regex("""Batch (\d+) out of (\d+)""")
+                            val match = regex.find(job)
+                            val batchIndex = match?.groups?.get(1)?.value?.toIntOrNull() ?: 0
+
+                            if(batchIndex != loadingImageIndex) {
+                                val missing = batchIndex - loadingImageIndex - 1
+                                if (missing > 0) {
+                                    repeat(missing) {
+                                        loadingImageList.add(Util.getEmptyImage(512, 512, 0x00000000))
+                                    }
+                                }
+                                loadingImageIndex = batchIndex
+                                loadingImageList.add(image)
+                                selectedImg = (imageList.size + loadingImageList.size) - 1
+                            }
+                        }else{
+                            if (loadingImageList.isNotEmpty()) {
+                                loadingImageList.removeAt(loadingImageList.lastIndex)
+                            }
+                            loadingImageList.add(image)
+                        }
+
                     }
                 })
             }
-            val bitmap = createBitmap(512, 512)
-            bitmap.eraseColor(0x00000000) // 全透明
 
-            val byteArrayOutputStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
-            val pngBytes = byteArrayOutputStream.toByteArray()
-            val base64 = Base64.encodeToString(pngBytes, Base64.NO_WRAP)
 
-            val placeholder = bitmap.asImageBitmap()
-            imageList.add(GeneratedImage(image = placeholder, base64 = base64))
-            selectedImg = imageList.lastIndex
+
+            loadingImageList.add(Util.getEmptyImage(512, 512, 0x00000000))
+            selectedImg = (imageList.size + loadingImageList.size) - 1
         }
     }
 
     fun deleteImg(index: Int) {
-        imageList.removeAt(index)
+        if(index < selectedImg){
+            selectedImg --
+        }else if(index == selectedImg){
+            val lastIndex = (imageList.size + loadingImageList.size) - 1
+            if(selectedImg == lastIndex){
+                selectedImg --
+            }
+        }
+        if(index >= imageList.size){
+            loadingImageList.removeAt(index - imageList.size)
+        }else{
+            imageList.removeAt(index)
+        }
     }
 
     Box(
@@ -493,7 +523,7 @@ fun ClientScreen(
             }
         )
         ImageShower(
-            images = imageList,
+            images = imageList + loadingImageList,
             onDelete = ::deleteImg,
             selectedImg = selectedImg,
             changeSelectedImg = {
