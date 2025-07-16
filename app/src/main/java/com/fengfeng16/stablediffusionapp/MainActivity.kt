@@ -20,6 +20,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -64,7 +65,7 @@ fun ServerManagerScreen(context: Context) {
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("添加服务器")
+            Text(stringResource(R.string.add_server))
         }
 
         if (showForm) {
@@ -136,13 +137,13 @@ fun fetchServerData(
         try {
             client.newCall(request).execute().use { response ->
                 if (!response.isSuccessful) {
-                    onError("服务器返回错误码：${response.code}")
+                    onError("Server return error code: ${response.code}")
                 } else {
                     onSuccess(response.body?.string() ?: "")
                 }
             }
         } catch (e: Exception) {
-            onError("连接失败：${e.message}")
+            onError("Connect failed: ${e.message}")
         }
     }
 }
@@ -153,7 +154,7 @@ fun ServerFormDialog(initial: ServerEntry?, onDismiss: () -> Unit, onSubmit: (Se
         onDismissRequest = onDismiss,
         confirmButton = {},
         dismissButton = {},
-        title = { Text(if (initial == null) "添加服务器" else "编辑服务器") },
+        title = { Text(if (initial == null) stringResource(R.string.add_server) else stringResource(R.string.edit_server)) },
         text = {
             AddServerForm(initial = initial, onSubmit = onSubmit)
         }
@@ -165,9 +166,9 @@ fun ErrorDialog(message: String, onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text("确定") }
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.ok)) }
         },
-        title = { Text("连接失败") },
+        title = { Text(stringResource(R.string.connect_failed)) },
         text = { Text(message) }
     )
 }
@@ -206,7 +207,7 @@ fun AddServerForm(initial: ServerEntry? = null, onSubmit: (ServerEntry) -> Unit)
             OutlinedTextField(
                 value = host,
                 onValueChange = { host = it },
-                label = { Text("地址") },
+                label = { Text(stringResource(R.string.address)) },
                 modifier = Modifier.weight(1.4f)
             )
         }
@@ -219,7 +220,7 @@ fun AddServerForm(initial: ServerEntry? = null, onSubmit: (ServerEntry) -> Unit)
                     if (v == null || v in 1..65535) portText = it
                 }
             },
-            label = { Text("端口号") },
+            label = { Text(stringResource(R.string.port)) },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth()
         )
@@ -227,7 +228,7 @@ fun AddServerForm(initial: ServerEntry? = null, onSubmit: (ServerEntry) -> Unit)
         OutlinedTextField(
             value = remark,
             onValueChange = { remark = it },
-            label = { Text("备注") },
+            label = { Text(stringResource(R.string.title)) },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -246,7 +247,7 @@ fun AddServerForm(initial: ServerEntry? = null, onSubmit: (ServerEntry) -> Unit)
             },
             modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
         ) {
-            Text("保存")
+            Text(stringResource(R.string.save))
         }
     }
 }
@@ -262,9 +263,9 @@ fun ServerCard(entry: ServerEntry, onDelete: () -> Unit, onEdit: () -> Unit, onC
             .clickable { onClick() }
     ) {
         Column(modifier = Modifier.padding(8.dp)) {
-            Text("备注：${entry.remark}")
+            Text(stringResource(R.string.title) + ": ${entry.remark}")
             val displayed = if (showReal) "${entry.protocol}${entry.host}:${entry.port}" else entry.protocol + entry.host.replace(Regex("(?<=.{3})."), "*") + ":${entry.port}"
-            Text("地址：$displayed")
+            Text(stringResource(R.string.address) + ": $displayed")
 
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Box(
@@ -281,13 +282,13 @@ fun ServerCard(entry: ServerEntry, onDelete: () -> Unit, onEdit: () -> Unit, onC
                         },
                     contentAlignment = Alignment.Center
                 ) {
-                    Icon(Icons.Default.Visibility, contentDescription = "查看")
+                    Icon(Icons.Default.Visibility, contentDescription = stringResource(R.string.show))
                 }
                 IconButton(onClick = onEdit) {
-                    Icon(Icons.Default.Edit, contentDescription = "编辑")
+                    Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.edit))
                 }
                 IconButton(onClick = onDelete) {
-                    Icon(Icons.Default.Delete, contentDescription = "删除")
+                    Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.delete))
                 }
             }
         }
@@ -309,7 +310,7 @@ fun DropdownMenuBox(
             value = selectedOption,
             onValueChange = {},
             readOnly = true,
-            label = { Text("协议") },
+            label = { Text(stringResource(R.string.protocol)) },
             modifier = Modifier.fillMaxWidth().clickable { expanded = true },
             trailingIcon = {
                 IconButton(onClick = { expanded = true }) {

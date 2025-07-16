@@ -5,7 +5,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
-import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -49,15 +48,12 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Autorenew
 import androidx.compose.material.icons.filled.Casino
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Shuffle
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
@@ -82,12 +78,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asAndroidBitmap
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
@@ -96,9 +90,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.createBitmap
 import com.fengfeng16.stablediffusionapp.UnitCompose.DropdownWithReload
 import com.fengfeng16.stablediffusionapp.UnitCompose.SliderWithInput
 import com.fengfeng16.stablediffusionapp.UnitCompose.TextFieldWithLabel
@@ -108,7 +103,6 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.ByteArrayOutputStream
 import kotlin.math.round
 import kotlin.random.Random
 
@@ -573,7 +567,7 @@ fun ConfigHeader(changeConfigPageState: (Boolean) -> Unit) {
         val keyboardController = LocalSoftwareKeyboardController.current
 
         Text(
-            text = "编辑参数",
+            text = stringResource(R.string.edit_properties),
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier
@@ -590,7 +584,7 @@ fun ConfigHeader(changeConfigPageState: (Boolean) -> Unit) {
         ) {
             Icon(
                 imageVector = Icons.Default.Close,
-                contentDescription = "Close",
+                contentDescription = stringResource(R.string.close),
                 tint = MaterialTheme.colorScheme.onPrimaryContainer,
             )
         }
@@ -743,7 +737,7 @@ fun LoraComponent(
 
     Column(modifier = modifier) {
         Text(
-            text = "Lora设置",
+            text = stringResource(R.string.lora_options),
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onBackground
         )
@@ -757,7 +751,7 @@ fun LoraComponent(
                     Column(modifier = Modifier.padding(8.dp)) {
                         Text(text = lora.name)
                         SliderWithInput(
-                            label = "权重",
+                            label = stringResource(R.string.weight),
                             getData = { _ -> lora.radio },
                             setData = { _, value ->
                                 val newRadio = (value as Number).toInt()
@@ -775,7 +769,10 @@ fun LoraComponent(
                             loraList.removeAt(index)
                             setData(loraKey, loraList.toList())
                         }) {
-                            Icon(Icons.Default.Delete, contentDescription = "删除")
+                            Icon(
+                                Icons.Default.Delete,
+                                contentDescription = stringResource(R.string.delete)
+                            )
                         }
                     }
                 }
@@ -791,7 +788,7 @@ fun LoraComponent(
                 reloadList("lora")
             }
         ) {
-            Text(text = "Reload Lora List")
+            Text(text = stringResource(R.string.lora_reload))
         }
         Text(
             color = MaterialTheme.colorScheme.onBackground,
@@ -858,7 +855,7 @@ fun ModelSelector(
     reloadList: (key: String) -> Unit
 ) {
     DropdownWithReload(
-        label = "模型",
+        label = stringResource(R.string.checkpoint),
         options = list.map { it.model_name },
         dataKey = "model",
         getData = getData,
@@ -877,10 +874,10 @@ fun PresetSelector(
     val options = listOf("") + list.map { it.name }
 
     val nameMap = options.associate { option ->
-        option to if (option.isBlank()) "无" else option
+        option to if (option.isBlank()) stringResource(R.string.none) else option
     }
     DropdownWithReload(
-        label = "提示词预设",
+        label = stringResource(R.string.prompt_style),
         options = options,
         dataKey = "promptPreset",
         getData = getData,
@@ -898,7 +895,7 @@ fun SamplerSelector(
     reloadList: (key: String) -> Unit
 ) {
     DropdownWithReload(
-        label = "采样器",
+        label = stringResource(R.string.sampler),
         options = list.map { it.name },
         dataKey = "sampler",
         getData = getData,
@@ -915,7 +912,7 @@ fun ScheduleSelector(
     reloadList: (key: String) -> Unit
 ) {
     DropdownWithReload(
-        label = "调度器",
+        label = stringResource(R.string.schedule),
         options = list.map { it.name },
         dataKey = "schedule",
         getData = getData,
@@ -933,7 +930,7 @@ fun VAESelector(
     reloadList: (key: String) -> Unit
 ) {
     DropdownWithReload(
-        label = "VAE",
+        label = stringResource(R.string.vae),
         options = list.map { it.model_name },
         dataKey = "vae",
         getData = getData,
@@ -948,7 +945,7 @@ fun PromptInput(
     setData: (String, Any) -> Unit,
 ) {
     TextFieldWithLabel(
-        label = "正向提示词",
+        label = stringResource(R.string.prompt),
         dataKey = "prompt",
         getData = getData,
         setData = setData,
@@ -957,7 +954,7 @@ fun PromptInput(
     )
 
     TextFieldWithLabel(
-        label = "负面提示词",
+        label = stringResource(R.string.negative_prompt),
         dataKey = "negativePrompt",
         getData = getData,
         setData = setData,
@@ -999,7 +996,7 @@ fun SizeSlider(
     }
 
     SliderWithInput(
-        label = "宽度",
+        label = stringResource(R.string.width),
         setData = setData,
         getData = getData,
         dataKey = "width",
@@ -1013,7 +1010,7 @@ fun SizeSlider(
     )
 
     SliderWithInput(
-        label = "高度",
+        label = stringResource(R.string.height),
         setData = setData,
         getData = getData,
         dataKey = "height",
@@ -1031,9 +1028,15 @@ fun SizeSlider(
                 changeSize(1216f, 832f)
             },
             modifier = Modifier
-                .weight(1f)
+                .weight(1f),
+            contentPadding = PaddingValues(0.dp)
         ) {
-            Text("横向 1216x832")
+            Text(
+                maxLines = 1,
+                overflow = TextOverflow.Visible,
+                softWrap = false,
+                text = stringResource(R.string.horizontal),
+            )
         }
         Spacer(Modifier.weight(0.1f))
         Button(
@@ -1041,9 +1044,15 @@ fun SizeSlider(
                 changeSize(832f, 1216f)
             },
             modifier = Modifier
-                .weight(1f)
+                .weight(1f),
+            contentPadding = PaddingValues(0.dp)
         ) {
-            Text("纵向 832x1216")
+            Text(
+                maxLines = 1,
+                overflow = TextOverflow.Visible,
+                softWrap = false,
+                text = stringResource(R.string.vertical)
+            )
         }
     }
 
@@ -1054,7 +1063,7 @@ fun SizeSlider(
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        Text("方形 1024x1024")
+        Text(stringResource(R.string.square))
     }
 }
 
@@ -1073,7 +1082,7 @@ fun StepSlider(
     }
 
     SliderWithInput(
-        label = "迭代步数",
+        label = stringResource(R.string.steps),
         getData = getData,
         setData = setData,
         dataKey = "steps",
@@ -1099,7 +1108,7 @@ fun CFGSlider(
     }
 
     SliderWithInput(
-        label = "CFG Scale",
+        label = stringResource(R.string.cfg),
         getData = getData,
         setData = setData,
         dataKey = "cfgScale",
@@ -1125,7 +1134,7 @@ fun ClipSlider(
     }
 
     SliderWithInput(
-        label = "Clip（负值）",
+        label = stringResource(R.string.clip),
         getData = getData,
         setData = setData,
         dataKey = "clipSkip",
@@ -1151,7 +1160,7 @@ fun BatchCountSlider(
     }
 
     SliderWithInput(
-        label = "生成批次",
+        label = stringResource(R.string.batch_count),
         getData = getData,
         setData = setData,
         dataKey = "batchCount",
@@ -1192,7 +1201,7 @@ fun SeedInputField(
                     text = it
                 }
             },
-            label = { Text("种子") },
+            label = { Text(stringResource(R.string.seed)) },
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Number
             ),
@@ -1220,8 +1229,9 @@ fun SeedInputField(
                 .padding(start = 8.dp)
                 .weight(0.2f)
         ) {
-            Icon(Icons.Default.Casino,
-                contentDescription = "随机刷新种子",
+            Icon(
+                Icons.Default.Casino,
+                contentDescription = stringResource(R.string.random_seed),
                 modifier = Modifier.size(22.dp)
             )
         }
@@ -1235,8 +1245,9 @@ fun SeedInputField(
                 .padding(start = 8.dp)
                 .weight(0.2f)
         ) {
-            Icon(Icons.Default.Clear,
-                contentDescription = "随机",
+            Icon(
+                Icons.Default.Clear,
+                contentDescription = stringResource(R.string.reset_seed),
                 modifier = Modifier.size(22.dp)
             )
         }
@@ -1263,7 +1274,7 @@ fun BottomButton(
             Icon(
                 modifier = Modifier.fillMaxSize(0.4f),
                 imageVector = Icons.Default.Edit,
-                contentDescription = "Edit"
+                contentDescription = stringResource(R.string.edit),
             )
         }
         Spacer(modifier = Modifier.weight(0.2f))
@@ -1275,7 +1286,7 @@ fun BottomButton(
                 .align(Alignment.CenterVertically)
         ) {
             Text(
-                text = "生成",
+                text = stringResource(R.string.generate),
                 style = MaterialTheme.typography.titleMedium,
             )
         }
@@ -1301,7 +1312,7 @@ fun ImageShower(
                 .background(Color.Black),
             contentAlignment = Alignment.Center
         ) {
-            Text("暂无图片", color = Color.White)
+            Text(stringResource(R.string.no_img), color = Color.White)
         }
         return
     }
@@ -1357,7 +1368,7 @@ fun ImageShower(
                     .size(40.dp)
                     .background(Color.White.copy(alpha = 0.5f), shape = CircleShape)
             ) {
-                Icon(Icons.Default.Download, contentDescription = "Download")
+                Icon(Icons.Default.Download, contentDescription = stringResource(R.string.download))
             }
         }
 
@@ -1373,7 +1384,7 @@ fun ImageShower(
                 Box {
                     Image(
                         bitmap = image.image,
-                        contentDescription = "Thumbnail $index",
+                        contentDescription = stringResource(R.string.thumbnail) + " $index",
                         modifier = Modifier
                             .size(64.dp)
                             .clip(RoundedCornerShape(8.dp))
@@ -1399,7 +1410,7 @@ fun ImageShower(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Delete,
-                            contentDescription = "Delete",
+                            contentDescription = stringResource(R.string.delete),
                             tint = Color.White,
                             modifier = Modifier.size(18.dp)
                         )
@@ -1415,7 +1426,8 @@ suspend fun saveImageToDownloads(context: Context, base64: String) {
         Base64.decode(base64, Base64.DEFAULT)
     } catch (e: IllegalArgumentException) {
         withContext(Dispatchers.Main) {
-            Toast.makeText(context, "无效的 Base64 数据", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.invalid_base64), Toast.LENGTH_SHORT)
+                .show()
         }
         return
     }
@@ -1437,17 +1449,29 @@ suspend fun saveImageToDownloads(context: Context, base64: String) {
                     out.write(bytes)
                 }
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(context, "图片已保存至相册", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.img_saved_success),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(context, "保存失败：${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.img_saved_failed) + " ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         } else {
             withContext(Dispatchers.Main) {
-                Toast.makeText(context, "保存失败，无法创建文件", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.img_cannot_create_file),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
