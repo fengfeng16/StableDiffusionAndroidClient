@@ -49,11 +49,15 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Autorenew
 import androidx.compose.material.icons.filled.Casino
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Shuffle
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
@@ -75,6 +79,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
@@ -90,6 +95,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.createBitmap
@@ -453,34 +459,42 @@ fun ClientScreen(
 
             var loadingImageIndex = 1
             if (startPolling != null) {
-                startPolling(url, fun(prog: Float, image: GeneratedImage?, job: String?, jobCount: Int?) {
-                    progress = prog
-                    if (image != null) {
-                        if(job != null && jobCount != null && jobCount > 1){
-                            val regex = Regex("""Batch (\d+) out of (\d+)""")
-                            val match = regex.find(job)
-                            val batchIndex = match?.groups?.get(1)?.value?.toIntOrNull() ?: 0
+                startPolling(
+                    url,
+                    fun(prog: Float, image: GeneratedImage?, job: String?, jobCount: Int?) {
+                        progress = prog
+                        if (image != null) {
+                            if (job != null && jobCount != null && jobCount > 1) {
+                                val regex = Regex("""Batch (\d+) out of (\d+)""")
+                                val match = regex.find(job)
+                                val batchIndex = match?.groups?.get(1)?.value?.toIntOrNull() ?: 0
 
-                            if(batchIndex != loadingImageIndex) {
-                                val missing = batchIndex - loadingImageIndex - 1
-                                if (missing > 0) {
-                                    repeat(missing) {
-                                        loadingImageList.add(Util.getEmptyImage(512, 512, 0x00000000))
+                                if (batchIndex != loadingImageIndex) {
+                                    val missing = batchIndex - loadingImageIndex - 1
+                                    if (missing > 0) {
+                                        repeat(missing) {
+                                            loadingImageList.add(
+                                                Util.getEmptyImage(
+                                                    512,
+                                                    512,
+                                                    0x00000000
+                                                )
+                                            )
+                                        }
                                     }
+                                    loadingImageIndex = batchIndex
+                                    loadingImageList.add(image)
+                                    selectedImg = (imageList.size + loadingImageList.size) - 1
                                 }
-                                loadingImageIndex = batchIndex
+                            } else {
+                                if (loadingImageList.isNotEmpty()) {
+                                    loadingImageList.removeAt(loadingImageList.lastIndex)
+                                }
                                 loadingImageList.add(image)
-                                selectedImg = (imageList.size + loadingImageList.size) - 1
                             }
-                        }else{
-                            if (loadingImageList.isNotEmpty()) {
-                                loadingImageList.removeAt(loadingImageList.lastIndex)
-                            }
-                            loadingImageList.add(image)
-                        }
 
-                    }
-                })
+                        }
+                    })
             }
 
 
@@ -491,17 +505,17 @@ fun ClientScreen(
     }
 
     fun deleteImg(index: Int) {
-        if(index < selectedImg){
-            selectedImg --
-        }else if(index == selectedImg){
+        if (index < selectedImg) {
+            selectedImg--
+        } else if (index == selectedImg) {
             val lastIndex = (imageList.size + loadingImageList.size) - 1
-            if(selectedImg == lastIndex){
-                selectedImg --
+            if (selectedImg == lastIndex) {
+                selectedImg--
             }
         }
-        if(index >= imageList.size){
+        if (index >= imageList.size) {
             loadingImageList.removeAt(index - imageList.size)
-        }else{
+        } else {
             imageList.removeAt(index)
         }
     }
@@ -546,6 +560,7 @@ fun ClientScreen(
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ConfigHeader(changeConfigPageState: (Boolean) -> Unit) {
     Box(
@@ -555,6 +570,8 @@ fun ConfigHeader(changeConfigPageState: (Boolean) -> Unit) {
             .background(MaterialTheme.colorScheme.primaryContainer)
             .padding(10.dp)
     ) {
+        val keyboardController = LocalSoftwareKeyboardController.current
+
         Text(
             text = "编辑参数",
             color = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -564,7 +581,10 @@ fun ConfigHeader(changeConfigPageState: (Boolean) -> Unit) {
         )
 
         IconButton(
-            onClick = { changeConfigPageState(false) },
+            onClick = {
+                changeConfigPageState(false)
+                keyboardController?.hide()
+            },
             modifier = Modifier
                 .align(Alignment.CenterEnd)
         ) {
@@ -1168,7 +1188,7 @@ fun SeedInputField(
         OutlinedTextField(
             value = text,
             onValueChange = {
-                if (it.matches(Regex("^-?\\d{0,10}$"))) {
+                if (it.matches(Regex("^-?\\d{0,19}$"))) {
                     text = it
                 }
             },
@@ -1195,9 +1215,30 @@ fun SeedInputField(
                 val seed = Random.nextLong(0, Long.MAX_VALUE)
                 updateSeed(seed)
             },
-            modifier = Modifier.padding(start = 8.dp)
+            contentPadding = PaddingValues(0.dp),
+            modifier = Modifier
+                .padding(start = 8.dp)
+                .weight(0.2f)
         ) {
-            Icon(Icons.Default.Casino, contentDescription = "随机")
+            Icon(Icons.Default.Casino,
+                contentDescription = "随机刷新种子",
+                modifier = Modifier.size(22.dp)
+            )
+        }
+        Button(
+            onClick = {
+                val seed = -1L
+                updateSeed(seed)
+            },
+            contentPadding = PaddingValues(0.dp),
+            modifier = Modifier
+                .padding(start = 8.dp)
+                .weight(0.2f)
+        ) {
+            Icon(Icons.Default.Clear,
+                contentDescription = "随机",
+                modifier = Modifier.size(22.dp)
+            )
         }
     }
 }
