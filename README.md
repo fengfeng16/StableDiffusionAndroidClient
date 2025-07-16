@@ -36,7 +36,7 @@ Please make sure to launch the web UI with the `--listen --api` flag enabled.
 
 #### 功能特性
 
-- [x] 自动保存生成参数等数据，无需每次重新输入。
+- [x] 自动保存生成参数等数据，无需每次重新输入
 - [x] 多语言界面：
   - [x] English - 英文
   - [x] 简体中文 - 简体中文
