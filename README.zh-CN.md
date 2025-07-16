@@ -20,6 +20,9 @@
     ·
     <a href="./README.zh-CN.md">简体中文</a>
   </p>
+  <p align="center">
+    <a href="https://github.com/fengfeng16/StableDiffusionAndroidClient/releases/latest">下载最新版本</a>
+  </p>
 </p>
 
 ## 概述
