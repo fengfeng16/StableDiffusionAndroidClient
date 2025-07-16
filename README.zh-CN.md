@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./doc/images/icon.png" style="width: 15%; border-radius: 50%; margin: -2%"/>
+  <img src="./doc/images/icon.png" style="width: 15%; margin: -2%"/>
   <h2 align="center">Stable Diffusion Android Client</h2>
   <p align="center">安卓端 Stable Diffusion 控制器，连接并远程操作 AUTOMATIC1111 WebUI</p>
 </p>
